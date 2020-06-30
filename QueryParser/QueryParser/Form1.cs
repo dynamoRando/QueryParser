@@ -32,12 +32,55 @@ namespace QueryParser
             //ParseUsingSQL(input);
             //ParseInput(input);
             //ParseListener(input);
-            Foo(input);
+            Foo(input); // this seems to work
+            Bar(input); // this also seems to work
+            Baz(input);
+            Boo(input);
+        }
 
+        private void Bar(string input)
+        {
+            Debug.WriteLine("Bar");
+            AntlrInputStream inputStream = new AntlrInputStream(input);
+            TSqlLexer lexer = new TSqlLexer(inputStream);
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+            TSqlParser parser = new TSqlParser(tokens);
+            var parseTree = parser.select_statement();
+            Debug.WriteLine("Bar2");
+            ParseTreeWalker walker = new ParseTreeWalker();
+            TSqlParserListenerExtended loader = new TSqlParserListenerExtended();
+            walker.Walk(loader, parseTree);
+        }
+
+        private void Baz(string input)
+        {
+            Debug.WriteLine("Baz");
+            AntlrInputStream inputStream = new AntlrInputStream(input);
+            TSqlLexer lexer = new TSqlLexer(inputStream);
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+            TSqlParser parser = new TSqlParser(tokens);
+            var parseTree = parser.search_condition();
+
+            ParseTreeWalker walker = new ParseTreeWalker();
+            TSqlParserListenerExtended loader = new TSqlParserListenerExtended();
+            walker.Walk(loader, parseTree);
+        }
+
+        private void Boo(string input)
+        {
+            Debug.WriteLine("Boo");
+            AntlrInputStream antlrInput = new AntlrInputStream(input);
+            TSqlLexer lexer = new TSqlLexer(antlrInput);
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+            TSqlParser parser = new TSqlParser(tokens);
+
+            TSqlParserListenerExtended listener = new TSqlParserListenerExtended();
+            parser.search_condition().EnterRule(listener);
         }
 
         private void Foo(string input)
         {
+            Debug.WriteLine("Foo");
             AntlrInputStream antlrInput = new AntlrInputStream(input);
             TSqlLexer lexer = new TSqlLexer(antlrInput);
             CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -45,7 +88,6 @@ namespace QueryParser
 
             TSqlParserListenerExtended listener = new TSqlParserListenerExtended();
             parser.select_statement().EnterRule(listener);
-            Debug.WriteLine("");
         }
 
         private void ParseListener(string input)
