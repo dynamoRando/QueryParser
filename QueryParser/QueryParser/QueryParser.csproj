@@ -7,13 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="tsqlCode\**" />
     <Compile Remove="tsql\**" />
+    <EmbeddedResource Remove="tsqlCode\**" />
     <EmbeddedResource Remove="tsql\**" />
+    <None Remove="tsqlCode\**" />
     <None Remove="tsql\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="TSqlVisitor.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Antlr4.Runtime.Standard" Version="4.8.0" />
+    <PackageReference Include="Microsoft.SqlServer.TransactSql.ScriptDom" Version="150.4573.2" />
   </ItemGroup>
 
 </Project>

@@ -12,7 +12,8 @@ namespace QueryParser
         public bool Visit(IParseTree tree)
         {
             Debug.WriteLine("");
-            throw new NotImplementedException();
+            Debug.WriteLine(tree.ToStringTree());
+            return true;
         }
 
         public bool VisitAGGREGATE_WINDOWED_FUNC([NotNull] TSqlParser.AGGREGATE_WINDOWED_FUNCContext context)
