@@ -46,7 +46,6 @@ namespace QueryParser
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             TSqlParser parser = new TSqlParser(tokens);
             var parseTree = parser.select_statement();
-            Debug.WriteLine("Bar2");
             ParseTreeWalker walker = new ParseTreeWalker();
             TSqlParserListenerExtended loader = new TSqlParserListenerExtended();
             walker.Walk(loader, parseTree);
@@ -88,6 +87,7 @@ namespace QueryParser
 
             TSqlParserListenerExtended listener = new TSqlParserListenerExtended();
             parser.select_statement().EnterRule(listener);
+            parser.search_condition().EnterRule(listener);
         }
 
         private void ParseListener(string input)
