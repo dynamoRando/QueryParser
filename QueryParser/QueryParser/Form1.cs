@@ -31,8 +31,21 @@ namespace QueryParser
 
             //ParseUsingSQL(input);
             //ParseInput(input);
-            ParseListener(input);
+            //ParseListener(input);
+            Foo(input);
 
+        }
+
+        private void Foo(string input)
+        {
+            AntlrInputStream antlrInput = new AntlrInputStream(input);
+            TSqlLexer lexer = new TSqlLexer(antlrInput);
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+            TSqlParser parser = new TSqlParser(tokens);
+
+            TSqlParserListenerExtended listener = new TSqlParserListenerExtended();
+            parser.select_statement().EnterRule(listener);
+            Debug.WriteLine("");
         }
 
         private void ParseListener(string input)
@@ -43,11 +56,15 @@ namespace QueryParser
             TSqlParser.Select_statementContext selectStatement = new TSqlParser.Select_statementContext(parser.Context, 0);
             TSqlParser.Select_list_elemContext selectElements = new TSqlParser.Select_list_elemContext(parser.Context, 0);
             TSqlParser.Select_listContext selectListContext = new TSqlParser.Select_listContext(parser.Context, 0);
+            TSqlParser.Sql_clauseContext sqlClauseContext = new TSqlParser.Sql_clauseContext(parser.Context, 0);
+            TSqlParser.Sql_clausesContext clasesContext = new TSqlParser.Sql_clausesContext(parser.Context, 0);
             ParseTreeWalker walker = new ParseTreeWalker();
             TSqlParserListenerExtended listener = new TSqlParserListenerExtended();
             walker.Walk(listener, selectStatement);
             walker.Walk(listener, selectListContext);
             walker.Walk(listener, selectElements);
+            walker.Walk(listener, sqlClauseContext);
+            walker.Walk(listener, clasesContext);
         }
 
         private void ParseInput(string input)
