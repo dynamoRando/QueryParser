@@ -36,6 +36,23 @@ namespace QueryParser
             Bar(input); // this also seems to work
             Baz(input);
             Boo(input);
+            Boom(input);
+        }
+
+        private void Boom(string input)
+        {
+            Debug.WriteLine("Boom");
+            AntlrInputStream inputStream = new AntlrInputStream(input);
+            TSqlLexer lexer = new TSqlLexer(inputStream);
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+            TSqlParser parser = new TSqlParser(tokens);
+            // these all appear to work in some way
+            //var parseTree = parser.dml_clause();
+            //var parseTree = parser.query_specification();
+            var parseTree = parser.query_expression();
+            ParseTreeWalker walker = new ParseTreeWalker();
+            TSqlParserListenerExtended loader = new TSqlParserListenerExtended();
+            walker.Walk(loader, parseTree);
         }
 
         private void Bar(string input)
