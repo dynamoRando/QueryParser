@@ -154,6 +154,13 @@ namespace QueryParser
             Debug.WriteLine(context.GetText());
         }
 
+        public override void ExitPredicate([NotNull] TSqlParser.PredicateContext context)
+        {
+            base.ExitPredicate(context);
+            Debug.WriteLine("ExitPredicate");
+            Debug.WriteLine(context.GetText());
+        }
+
         public override void EnterSimple_id([NotNull] TSqlParser.Simple_idContext context)
         {
             base.EnterSimple_id(context);
