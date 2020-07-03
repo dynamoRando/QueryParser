@@ -8,6 +8,9 @@ namespace QueryParser
 {
     public class TSqlParserListenerExtended : TSqlParserBaseListener
     {
+        public int SearchConditionAddCount = 0;
+        public int SearchConditionNotCount = 0;
+
         public override void EnterFull_table_name([NotNull] TSqlParser.Full_table_nameContext context)
         {
             base.EnterFull_table_name(context);
@@ -108,6 +111,95 @@ namespace QueryParser
         {
             base.EnterSearch_condition(context);
             Debug.WriteLine("EnterSearch_condition");
+            Debug.WriteLine(context.GetText());
+        
+        }
+
+        public override void ExitSearch_condition_and([NotNull] TSqlParser.Search_condition_andContext context)
+        {
+            base.ExitSearch_condition_and(context);
+            Debug.WriteLine("ExitSearch_condition_and");
+            Debug.WriteLine(context.GetText());
+        }
+
+        public override void ExitSearch_condition_not([NotNull] TSqlParser.Search_condition_notContext context)
+        {
+            base.ExitSearch_condition_not(context);
+            Debug.WriteLine("ExitSearch_condition_not");
+            Debug.WriteLine(context.GetText());
+
+            /*
+            Debug.WriteLine("----");
+            var child = context.GetChild(0);
+            if (child.ChildCount == 3)
+            {
+                Debug.WriteLine(child.GetChild(0).GetText());
+                Debug.WriteLine(child.GetChild(1).GetText());
+                Debug.WriteLine(child.GetChild(2).GetText());
+            }
+            */
+        }
+
+        public override void EnterPredicate([NotNull] TSqlParser.PredicateContext context)
+        {
+            base.EnterPredicate(context);
+            Debug.WriteLine("EnterPredicate");
+            Debug.WriteLine(context.GetText());
+        }
+
+        public override void EnterExpression([NotNull] TSqlParser.ExpressionContext context)
+        {
+            base.EnterExpression(context);
+            Debug.WriteLine("EnterExpression");
+            Debug.WriteLine(context.GetText());
+        }
+
+        public override void EnterSimple_id([NotNull] TSqlParser.Simple_idContext context)
+        {
+            base.EnterSimple_id(context);
+            Debug.WriteLine("EnterSimple_id");
+            Debug.WriteLine(context.GetText());
+        }
+
+        public override void EnterFull_column_name([NotNull] TSqlParser.Full_column_nameContext context)
+        {
+            base.EnterFull_column_name(context);
+            Debug.WriteLine("EnterFull_column_name");
+            Debug.WriteLine(context.GetText());
+        }
+
+        public override void EnterId([NotNull] TSqlParser.IdContext context)
+        {
+            base.EnterId(context);
+            Debug.WriteLine("EnterId");
+            Debug.WriteLine(context.GetText());
+        }
+
+        public override void EnterComparison_operator([NotNull] TSqlParser.Comparison_operatorContext context)
+        {
+            base.EnterComparison_operator(context);
+            Debug.WriteLine("EnterComparison_operator");
+            Debug.WriteLine(context.GetText());
+        }
+
+        public override void EnterConstant([NotNull] TSqlParser.ConstantContext context)
+        {
+            base.EnterConstant(context);
+            Debug.WriteLine("EnterConstant");
+            Debug.WriteLine(context.GetText());
+        }
+
+        public override void EnterConstant_expression([NotNull] TSqlParser.Constant_expressionContext context)
+        {
+            base.EnterConstant_expression(context);
+            Debug.WriteLine("EnterConstant_expression");
+            Debug.WriteLine(context.GetText());
+        }
+
+        public override void EnterPrimitive_expression([NotNull] TSqlParser.Primitive_expressionContext context)
+        {
+            base.EnterPrimitive_expression(context);
+            Debug.WriteLine("EnterPrimitive_expression");
             Debug.WriteLine(context.GetText());
         }
 

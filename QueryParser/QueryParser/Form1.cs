@@ -53,6 +53,8 @@ namespace QueryParser
             ParseTreeWalker walker = new ParseTreeWalker();
             TSqlParserListenerExtended loader = new TSqlParserListenerExtended();
             walker.Walk(loader, parseTree);
+            Debug.WriteLine("---");
+            Debug.WriteLine(parseTree.ToStringTree(parser));
         }
 
         private void Bar(string input)
