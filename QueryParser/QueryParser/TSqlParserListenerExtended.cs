@@ -8,12 +8,29 @@ namespace QueryParser
 {
     public class TSqlParserListenerExtended : TSqlParserBaseListener
     {
+        public override void EnterFull_table_name([NotNull] TSqlParser.Full_table_nameContext context)
+        {
+            base.EnterFull_table_name(context);
+            Debug.WriteLine("EnterFull_table_name");
+            Debug.WriteLine(context.GetText());
+        }
+        public override void EnterTable_name([NotNull] TSqlParser.Table_nameContext context)
+        {
+            base.EnterTable_name(context);
+            Debug.WriteLine("EnterTable_name");
+            Debug.WriteLine(context.GetText());
+        }
+        public override void EnterSimple_name([NotNull] TSqlParser.Simple_nameContext context)
+        {
+            base.EnterSimple_name(context);
+            Debug.WriteLine("EnterSimple_name");
+            Debug.WriteLine(context.GetText());
+        }
         public override void EnterSelect_statement([NotNull] TSqlParser.Select_statementContext context)
         {
             base.EnterSelect_statement(context);
             Debug.WriteLine("EnterSelect_statement");
             Debug.WriteLine(context.GetText());
-            
         }
 
         public override void ExitSelect_statement([NotNull] TSqlParser.Select_statementContext context)

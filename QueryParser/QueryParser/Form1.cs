@@ -32,10 +32,10 @@ namespace QueryParser
             //ParseUsingSQL(input);
             //ParseInput(input);
             //ParseListener(input);
-            Foo(input); // this seems to work
-            Bar(input); // this also seems to work
-            Baz(input);
-            Boo(input);
+            //Foo(input); // this seems to work
+            //Bar(input); // this also seems to work
+            //Baz(input);
+            //Boo(input);
             Boom(input);
         }
 
@@ -47,9 +47,9 @@ namespace QueryParser
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             TSqlParser parser = new TSqlParser(tokens);
             // these all appear to work in some way
-            //var parseTree = parser.dml_clause();
+            var parseTree = parser.dml_clause();
             //var parseTree = parser.query_specification();
-            var parseTree = parser.query_expression();
+            //var parseTree = parser.query_expression();
             ParseTreeWalker walker = new ParseTreeWalker();
             TSqlParserListenerExtended loader = new TSqlParserListenerExtended();
             walker.Walk(loader, parseTree);
