@@ -1,8 +1,10 @@
 ﻿using Antlr4.Runtime.Misc;
+using Microsoft.SqlServer.TransactSql.ScriptDom;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using QueryParser.Queries;
 
 namespace QueryParser
 {
@@ -10,6 +12,13 @@ namespace QueryParser
     {
         public int SearchConditionAddCount = 0;
         public int SearchConditionNotCount = 0;
+        public int PredicateLevel = 0;
+        public QuerySelectStatement Statement = new QuerySelectStatement();
+
+        public TSqlParserListenerExtended()
+        {
+
+        }
 
         public override void EnterFull_table_name([NotNull] TSqlParser.Full_table_nameContext context)
         {
@@ -34,6 +43,7 @@ namespace QueryParser
             base.EnterSelect_statement(context);
             Debug.WriteLine("EnterSelect_statement");
             Debug.WriteLine(context.GetText());
+            Statement.RawStatement = context.GetText();
         }
 
         public override void ExitSelect_statement([NotNull] TSqlParser.Select_statementContext context)
@@ -41,6 +51,12 @@ namespace QueryParser
             base.ExitSelect_statement(context);
             Debug.WriteLine("ExitSelect_statement");
             Debug.WriteLine(context.GetText());
+            
+            Debug.WriteLine("-----");
+            Statement.Terms.ForEach(t =>
+            {
+                Debug.WriteLine($"{t.SearchItemText} : {t.SearchItemIndex.ToString()}");
+            });
         }
 
         public override void EnterSelect_list([NotNull] TSqlParser.Select_listContext context)
@@ -145,6 +161,10 @@ namespace QueryParser
             base.EnterPredicate(context);
             Debug.WriteLine("EnterPredicate");
             Debug.WriteLine(context.GetText());
+            
+            Debug.WriteLine($"Predicate Level: {PredicateLevel.ToString()}");
+            Statement.Terms.Add(new SearchItem(context.GetText(), PredicateLevel));
+            PredicateLevel++;
         }
 
         public override void EnterExpression([NotNull] TSqlParser.ExpressionContext context)
@@ -159,6 +179,8 @@ namespace QueryParser
             base.ExitPredicate(context);
             Debug.WriteLine("ExitPredicate");
             Debug.WriteLine(context.GetText());
+            PredicateLevel--;
+            Debug.WriteLine($"Predicate Level: {PredicateLevel.ToString()}");
         }
 
         public override void EnterSimple_id([NotNull] TSqlParser.Simple_idContext context)
