@@ -29,12 +29,12 @@ namespace QueryParser.Queries
                 }
 
                 if (clause.Contains("AND"))
-                {
-                    
+                {   
                     var andTerms = clause.Split("AND").ToList();
                     andTerms.RemoveAll(t => string.IsNullOrEmpty(t));
                     // this is wrong, bc example
-                    //NAMELIKE'%RANDY%'ANDRANK=2ORNAME='MEGAN'
+                    // NAMELIKE'%RANDY%'ANDRANK=2ORNAME='MEGAN'
+                    // results in 'NAMELIKE'%RANDY%', 'RANK=2ORNAME='MEGAN''
                     if (andTerms.Count == 2)
                     {
                         var boolStep = new ExecutionBooleanResult();

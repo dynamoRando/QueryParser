@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Text;
 using QueryParser.Queries;
 using System.Linq;
+using System.Configuration;
 
 namespace QueryParser
 {
@@ -18,6 +19,14 @@ namespace QueryParser
 
         public TSqlParserListenerExtended()
         {
+
+        }
+
+        public override void EnterKey_options([NotNull] TSqlParser.Key_optionsContext context)
+        {
+            base.EnterKey_options(context);
+            Debug.WriteLine("EnterKey_options");
+            Debug.WriteLine(context.GetText());
 
         }
 
@@ -125,6 +134,7 @@ namespace QueryParser
             base.EnterSearch_condition_list(context);
             Debug.WriteLine("EnterSearch_condition_list");
             Debug.WriteLine(context.GetText());
+
         }
 
         public override void ExitSearch_condition_list([NotNull] TSqlParser.Search_condition_listContext context)
@@ -138,7 +148,33 @@ namespace QueryParser
         {
             base.EnterSearch_condition(context);
             Debug.WriteLine("EnterSearch_condition");
-            Debug.WriteLine(context.GetText());        
+            Debug.WriteLine(context.GetText());
+
+            Debug.WriteLine("----EnterSearch_condition children----");
+            var children = context.children;
+            foreach (var x in children)
+            {
+                Debug.WriteLine($"value of: {x.GetText()}");
+            }
+            Debug.WriteLine("----EnterSearch_condition children----");
+
+            Debug.WriteLine("----EnterSearch_condition----");
+            var child = context.GetChild(0);
+            if (child.ChildCount == 3)
+            {
+                Debug.WriteLine(child.GetChild(0).GetText());
+                Debug.WriteLine(child.GetChild(1).GetText());
+                Debug.WriteLine(child.GetChild(2).GetText());
+            }
+            Debug.WriteLine("----EnterSearch_condition----");
+
+            var item = context.GetToken(1, 9);
+            Debug.WriteLine("");
+
+            /*
+             * 9 is AND
+                235 is OR
+             */
         }
 
         public override void ExitSearch_condition_and([NotNull] TSqlParser.Search_condition_andContext context)
@@ -154,8 +190,7 @@ namespace QueryParser
             Debug.WriteLine("ExitSearch_condition_not");
             Debug.WriteLine(context.GetText());
 
-            /*
-            Debug.WriteLine("----");
+            Debug.WriteLine("----ExitSearch_condition_not----");
             var child = context.GetChild(0);
             if (child.ChildCount == 3)
             {
@@ -163,7 +198,7 @@ namespace QueryParser
                 Debug.WriteLine(child.GetChild(1).GetText());
                 Debug.WriteLine(child.GetChild(2).GetText());
             }
-            */
+            Debug.WriteLine("----ExitSearch_condition_not----");
         }
 
         public override void EnterPredicate([NotNull] TSqlParser.PredicateContext context)
@@ -175,6 +210,11 @@ namespace QueryParser
             Debug.WriteLine($"Predicate Level: {PredicateLevel.ToString()}");
             Statement.Terms.Add(new SearchTerm(context.GetText(), PredicateLevel));
             PredicateLevel++;
+
+            Debug.WriteLine("----EnterPredicate Parent----");
+            var parent = context.Parent;
+            Debug.WriteLine($"{parent.GetText()}");
+            Debug.WriteLine("----EnterPredicate Parent----");
         }
 
         public override void EnterExpression([NotNull] TSqlParser.ExpressionContext context)

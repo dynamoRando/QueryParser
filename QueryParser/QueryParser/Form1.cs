@@ -55,6 +55,9 @@ namespace QueryParser
             walker.Walk(loader, parseTree);
             Debug.WriteLine("---");
             Debug.WriteLine(parseTree.ToStringTree(parser));
+
+            var item = lexer.Vocabulary;
+            Debug.WriteLine("");
         }
 
         private void Bar(string input)
