@@ -179,6 +179,9 @@ namespace QueryParser
             //Debug.WriteLine("----Get AND Token Parents----");
 
             var orItem = context.OR();
+            Debug.WriteLine("----EnterSearch_condition OR----");
+            orItem.ToList().ForEach(i => i.GetText());
+            Debug.WriteLine("----EnterSearch_condition OR----");
             Debug.WriteLine("");
 
 
@@ -325,8 +328,10 @@ namespace QueryParser
             base.EnterSearch_condition_and(context);
             Debug.WriteLine("EnterSearch_condition_and");
             Debug.WriteLine(context.GetText());
-            var andClause = context.AND();
-            Debug.WriteLine("");
+            var andClause = context.AND().ToList();
+            Debug.WriteLine("EnterSearch_condition_and TEXT");
+            andClause.ForEach(c => Debug.WriteLine($"{c.GetText()}"));
+            Debug.WriteLine("EnterSearch_condition_and TEXT");
         }
 
         public override void EnterSearch_condition_not([NotNull] TSqlParser.Search_condition_notContext context)
