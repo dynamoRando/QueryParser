@@ -8,6 +8,7 @@ namespace QueryParser.Queries
     {
         public List<SearchTerm> Terms { get; set; }
         public string RawStatement { get; set; }
+        public string WhereClause { get; set; }
         public QuerySelectStatement()
         {
             Terms = new List<SearchTerm>();

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using QueryParser.Queries;
+using System.Linq;
 
 namespace QueryParser
 {
@@ -53,10 +54,20 @@ namespace QueryParser
             Debug.WriteLine(context.GetText());
             
             Debug.WriteLine("-----");
+            Debug.WriteLine($"{Statement.RawStatement}");
+            Debug.WriteLine($"{Statement.WhereClause}");
             Statement.Terms.ForEach(t =>
             {
                 Debug.WriteLine($"{t.SearchItemText} : {t.SearchTermIndex.ToString()}");
             });
+
+            var items = Statement.WhereClause.Split('(', ')').ToList();
+            Debug.WriteLine("-----");
+            foreach (var item in items)
+            {
+                Debug.WriteLine(item);
+            }
+            Debug.WriteLine("-----");
         }
 
         public override void EnterSelect_list([NotNull] TSqlParser.Select_listContext context)
@@ -127,8 +138,7 @@ namespace QueryParser
         {
             base.EnterSearch_condition(context);
             Debug.WriteLine("EnterSearch_condition");
-            Debug.WriteLine(context.GetText());
-        
+            Debug.WriteLine(context.GetText());        
         }
 
         public override void ExitSearch_condition_and([NotNull] TSqlParser.Search_condition_andContext context)
@@ -237,6 +247,7 @@ namespace QueryParser
             base.ExitSearch_condition(context);
             Debug.WriteLine("ExitSearch_condition");
             Debug.WriteLine(context.GetText());
+            Statement.WhereClause = context.GetText();
         }
 
         public override void EnterSearch_condition_and([NotNull] TSqlParser.Search_condition_andContext context)

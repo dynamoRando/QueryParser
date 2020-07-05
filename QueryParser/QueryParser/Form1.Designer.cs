@@ -39,8 +39,8 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(523, 329);
             this.textBox1.TabIndex = 0;
-            this.textBox1.Text = "SELECT NAME, AGE, RANK FROM EMPLOYEE WHERE ((NAME LIKE \'%RANDY%\' OR RANK = 2) AND" +
-    " AGE > 32) OR (NAME = \'BRIAN\')";
+            this.textBox1.Text = "SELECT NAME, AGE, RANK FROM EMPLOYEE WHERE ((NAME LIKE \'%RANDY%\' AND RANK = 2 OR " +
+    "NAME = \'MEGAN\') AND AGE > 32) OR (NAME = \'BRIAN\')";
             // 
             // button1
             // 

@@ -18,7 +18,7 @@ namespace QueryParser.Queries
         #endregion
 
         #region Public Methods
-        public ExecutionResult GetResult()
+        public ExecutionResult Execute()
         {
             var result = new ExecutionResult();
 
