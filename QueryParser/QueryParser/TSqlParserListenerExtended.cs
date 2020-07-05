@@ -55,7 +55,7 @@ namespace QueryParser
             Debug.WriteLine("-----");
             Statement.Terms.ForEach(t =>
             {
-                Debug.WriteLine($"{t.SearchItemText} : {t.SearchItemIndex.ToString()}");
+                Debug.WriteLine($"{t.SearchItemText} : {t.SearchTermIndex.ToString()}");
             });
         }
 
@@ -163,7 +163,7 @@ namespace QueryParser
             Debug.WriteLine(context.GetText());
             
             Debug.WriteLine($"Predicate Level: {PredicateLevel.ToString()}");
-            Statement.Terms.Add(new SearchItem(context.GetText(), PredicateLevel));
+            Statement.Terms.Add(new SearchTerm(context.GetText(), PredicateLevel));
             PredicateLevel++;
         }
 

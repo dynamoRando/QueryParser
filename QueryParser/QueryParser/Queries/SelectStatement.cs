@@ -6,11 +6,11 @@ namespace QueryParser.Queries
 {
     public class QuerySelectStatement
     {
-        public List<SearchItem> Terms { get; set; }
+        public List<SearchTerm> Terms { get; set; }
         public string RawStatement { get; set; }
         public QuerySelectStatement()
         {
-            Terms = new List<SearchItem>();
+            Terms = new List<SearchTerm>();
         }
     }
 }
