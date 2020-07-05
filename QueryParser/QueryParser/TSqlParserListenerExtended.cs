@@ -168,8 +168,16 @@ namespace QueryParser
             }
             Debug.WriteLine("----EnterSearch_condition----");
 
-            var item = context.GetToken(1, 9);
-            Debug.WriteLine("");
+            //Debug.WriteLine("----Get OR Token Parents----");
+            //var item = context.GetTokens(235).ToList();
+            //item.ForEach(i => Debug.WriteLine($"{i.Parent.GetText()}"));
+            //Debug.WriteLine("----Get OR Token Parents----");
+
+            //Debug.WriteLine("----Get AND Token Parents----");
+            //var item2 = context.GetTokens(9).ToList();
+            //item2.ForEach(i => Debug.WriteLine($"{i.Parent.GetText()}"));
+            //Debug.WriteLine("----Get AND Token Parents----");
+
 
             /*
              * 9 is AND
@@ -211,10 +219,16 @@ namespace QueryParser
             Statement.Terms.Add(new SearchTerm(context.GetText(), PredicateLevel));
             PredicateLevel++;
 
-            Debug.WriteLine("----EnterPredicate Parent----");
-            var parent = context.Parent;
+            Debug.WriteLine("----EnterPredicate Parent.Parent----");
+            var parent = context.Parent.Parent;
             Debug.WriteLine($"{parent.GetText()}");
-            Debug.WriteLine("----EnterPredicate Parent----");
+            Debug.WriteLine("----EnterPredicate Parent.Parent----");
+
+            Debug.WriteLine("----EnterPredicate Parent.Parent.Parent----");
+            var parent2 = context.Parent.Parent.Parent;
+            Debug.WriteLine($"{parent2.GetText()}");
+            Debug.WriteLine("----EnterPredicate Parent.Parent.Parent----");
+
         }
 
         public override void EnterExpression([NotNull] TSqlParser.ExpressionContext context)
