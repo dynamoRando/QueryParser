@@ -184,7 +184,6 @@ namespace QueryParser
             Debug.WriteLine("----EnterSearch_condition OR----");
             Debug.WriteLine("");
 
-
             /*
              * 9 is AND
                 235 is OR
@@ -248,6 +247,29 @@ namespace QueryParser
             Debug.WriteLine($"{parent2.GetText()}");
             Debug.WriteLine("----EnterPredicate Parent.Parent.Parent----");
 
+            var item = context.expression().ToList();
+            Debug.WriteLine("----EnterPredicate Expression Text---");
+            item.ForEach(i => Debug.WriteLine(i.GetText()));
+            Debug.WriteLine("----EnterPredicate Expression Text---");
+            var items = context.expression_list();
+
+            var and = context.AND();
+            var like = context.LIKE();
+
+            if (and != null)
+            {
+                Debug.WriteLine("----EnterPredicate Expression AND Text---");
+                Debug.WriteLine(and.GetText());
+                Debug.WriteLine("----EnterPredicate Expression AND Text---");
+            }
+            if (like != null)
+            {
+                Debug.WriteLine("----EnterPredicate Expression LIKE Text---");
+                Debug.WriteLine(like.GetText());
+                Debug.WriteLine("----EnterPredicate Expression LIKE Text---");
+            }
+            
+            Debug.WriteLine("");
         }
 
         public override void EnterExpression([NotNull] TSqlParser.ExpressionContext context)
