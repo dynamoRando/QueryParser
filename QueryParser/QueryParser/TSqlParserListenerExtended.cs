@@ -178,6 +178,9 @@ namespace QueryParser
             //item2.ForEach(i => Debug.WriteLine($"{i.Parent.GetText()}"));
             //Debug.WriteLine("----Get AND Token Parents----");
 
+            var orItem = context.OR();
+            Debug.WriteLine("");
+
 
             /*
              * 9 is AND
@@ -209,11 +212,23 @@ namespace QueryParser
             Debug.WriteLine("----ExitSearch_condition_not----");
         }
 
+        public override void EnterEvent_session_predicate_expression([NotNull] TSqlParser.Event_session_predicate_expressionContext context)
+        {
+            base.EnterEvent_session_predicate_expression(context);
+            Debug.WriteLine("EnterEvent_session_predicate_expression");
+            Debug.WriteLine(context.GetText());
+            //Event_session_predicate_expressionContext
+        }
+
         public override void EnterPredicate([NotNull] TSqlParser.PredicateContext context)
         {
             base.EnterPredicate(context);
             Debug.WriteLine("EnterPredicate");
             Debug.WriteLine(context.GetText());
+
+            var searchCondition = context.search_condition();
+            var andNode = context.AND();
+            var likeNode = context.LIKE();
             
             Debug.WriteLine($"Predicate Level: {PredicateLevel.ToString()}");
             Statement.Terms.Add(new SearchTerm(context.GetText(), PredicateLevel));
@@ -222,6 +237,7 @@ namespace QueryParser
             Debug.WriteLine("----EnterPredicate Parent.Parent----");
             var parent = context.Parent.Parent;
             Debug.WriteLine($"{parent.GetText()}");
+            
             Debug.WriteLine("----EnterPredicate Parent.Parent----");
 
             Debug.WriteLine("----EnterPredicate Parent.Parent.Parent----");
@@ -309,6 +325,8 @@ namespace QueryParser
             base.EnterSearch_condition_and(context);
             Debug.WriteLine("EnterSearch_condition_and");
             Debug.WriteLine(context.GetText());
+            var andClause = context.AND();
+            Debug.WriteLine("");
         }
 
         public override void EnterSearch_condition_not([NotNull] TSqlParser.Search_condition_notContext context)
@@ -316,6 +334,7 @@ namespace QueryParser
             base.EnterSearch_condition_not(context);
             Debug.WriteLine("EnterSearch_condition_not");
             Debug.WriteLine(context.GetText());
+            
         }
     }
 }
