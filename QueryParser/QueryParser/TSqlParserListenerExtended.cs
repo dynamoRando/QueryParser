@@ -7,6 +7,7 @@ using System.Text;
 using QueryParser.Queries;
 using System.Linq;
 using System.Configuration;
+using System.Runtime.CompilerServices;
 
 namespace QueryParser
 {
@@ -61,7 +62,7 @@ namespace QueryParser
             base.ExitSelect_statement(context);
             Debug.WriteLine("ExitSelect_statement");
             Debug.WriteLine(context.GetText());
-            
+
             Debug.WriteLine("-----");
             Debug.WriteLine($"{Statement.RawStatement}");
             Debug.WriteLine($"{Statement.WhereClause}");
@@ -91,7 +92,7 @@ namespace QueryParser
             base.ExitSelect_list(context);
             Debug.WriteLine("ExitSelect_list");
             Debug.WriteLine(context.GetText());
-            
+
         }
 
         public override void EnterSelect_list_elem([NotNull] TSqlParser.Select_list_elemContext context)
@@ -231,15 +232,42 @@ namespace QueryParser
             var searchCondition = context.search_condition();
             var andNode = context.AND();
             var likeNode = context.LIKE();
-            
+
             Debug.WriteLine($"Predicate Level: {PredicateLevel.ToString()}");
             Statement.Terms.Add(new SearchTerm(context.GetText(), PredicateLevel));
             PredicateLevel++;
 
-            Debug.WriteLine("----EnterPredicate Parent.Parent----");
+            Debug.WriteLine("Enumerating EnterPredicate.Parent.Parent Children");
             var parent = context.Parent.Parent;
+            var parentChildren = parent.ChildCount;
+            for(int j = 0; j < parentChildren; j++)
+            {
+                var c = parent.GetChild(j);
+                Debug.WriteLine(c.GetText());
+            }
+            Debug.WriteLine("Enumerating EnterPredicate.Parent.Parent Children");
+
+
+            var expressionCount = context.expression().Count();
+            for (int i = 0; i < expressionCount; i++)
+            {
+                var x = context.expression(i);
+                var andTokens = x.GetTokens(9); // and
+                var orTokens = x.GetTokens(235); // or
+                Debug.WriteLine(x.GetText());
+                foreach (var a in andTokens)
+                {
+                    Debug.WriteLine(a.GetText());
+                }
+                foreach (var a in orTokens)
+                {
+                    Debug.WriteLine(a.GetText());
+                }
+            }
+
+            Debug.WriteLine("----EnterPredicate Parent.Parent----");
+
             Debug.WriteLine($"{parent.GetText()}");
-            
             Debug.WriteLine("----EnterPredicate Parent.Parent----");
 
             Debug.WriteLine("----EnterPredicate Parent.Parent.Parent----");
@@ -247,11 +275,28 @@ namespace QueryParser
             Debug.WriteLine($"{parent2.GetText()}");
             Debug.WriteLine("----EnterPredicate Parent.Parent.Parent----");
 
+            Debug.WriteLine("Enumerating EnterPredicate.Parent.Parent.Parent Children");
+            var parentChildren2 = parent2.ChildCount;
+            for (int j = 0; j < parentChildren; j++)
+            {
+                var c = parent2.GetChild(j);
+                if (c != null)
+                {
+                    Debug.WriteLine(c.GetText());
+                }
+            }
+            Debug.WriteLine("Enumerating EnterPredicate.Parent.Parent.Parent Children");
+
+
             var item = context.expression().ToList();
             Debug.WriteLine("----EnterPredicate Expression Text---");
             item.ForEach(i => Debug.WriteLine(i.GetText()));
             Debug.WriteLine("----EnterPredicate Expression Text---");
             var items = context.expression_list();
+            if (items != null)
+            {
+                Debug.WriteLine(items.GetText());
+            }
 
             var and = context.AND();
             var like = context.LIKE();
@@ -268,7 +313,7 @@ namespace QueryParser
                 Debug.WriteLine(like.GetText());
                 Debug.WriteLine("----EnterPredicate Expression LIKE Text---");
             }
-            
+
             Debug.WriteLine("");
         }
 
@@ -361,7 +406,7 @@ namespace QueryParser
             base.EnterSearch_condition_not(context);
             Debug.WriteLine("EnterSearch_condition_not");
             Debug.WriteLine(context.GetText());
-            
+
         }
     }
 }
