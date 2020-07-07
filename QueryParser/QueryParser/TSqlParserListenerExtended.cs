@@ -151,15 +151,15 @@ namespace QueryParser
             Debug.WriteLine("EnterSearch_condition");
             Debug.WriteLine(context.GetText());
 
-            Debug.WriteLine("----EnterSearch_condition children----");
-            var children = context.children;
-            foreach (var x in children)
-            {
-                Debug.WriteLine($"value of: {x.GetText()}");
-            }
-            Debug.WriteLine("----EnterSearch_condition children----");
+            //Debug.WriteLine("----EnterSearch_condition children----");
+            //var children = context.children;
+            //foreach (var x in children)
+            //{
+            //    Debug.WriteLine($"value of: {x.GetText()}");
+            //}
+            //Debug.WriteLine("----EnterSearch_condition children----");
 
-            Debug.WriteLine("----EnterSearch_condition----");
+            Debug.WriteLine("----EnterSearch_condition children----");
             var child = context.GetChild(0);
             if (child.ChildCount == 3)
             {
@@ -167,7 +167,7 @@ namespace QueryParser
                 Debug.WriteLine(child.GetChild(1).GetText());
                 Debug.WriteLine(child.GetChild(2).GetText());
             }
-            Debug.WriteLine("----EnterSearch_condition----");
+            Debug.WriteLine("----EnterSearch_condition children----");
 
             //Debug.WriteLine("----Get OR Token Parents----");
             //var item = context.GetTokens(235).ToList();
@@ -179,11 +179,11 @@ namespace QueryParser
             //item2.ForEach(i => Debug.WriteLine($"{i.Parent.GetText()}"));
             //Debug.WriteLine("----Get AND Token Parents----");
 
-            var orItem = context.OR();
-            Debug.WriteLine("----EnterSearch_condition OR----");
-            orItem.ToList().ForEach(i => i.GetText());
-            Debug.WriteLine("----EnterSearch_condition OR----");
-            Debug.WriteLine("");
+            //var orItem = context.OR();
+            //Debug.WriteLine("----EnterSearch_condition OR----");
+            //orItem.ToList().ForEach(i => i.GetText());
+            //Debug.WriteLine("----EnterSearch_condition OR----");
+            //Debug.WriteLine("");
 
             /*
              * 9 is AND
@@ -220,7 +220,6 @@ namespace QueryParser
             base.EnterEvent_session_predicate_expression(context);
             Debug.WriteLine("EnterEvent_session_predicate_expression");
             Debug.WriteLine(context.GetText());
-            //Event_session_predicate_expressionContext
         }
 
         public override void EnterPredicate([NotNull] TSqlParser.PredicateContext context)
@@ -248,22 +247,22 @@ namespace QueryParser
             Debug.WriteLine("Enumerating EnterPredicate.Parent.Parent Children");
 
 
-            var expressionCount = context.expression().Count();
-            for (int i = 0; i < expressionCount; i++)
-            {
-                var x = context.expression(i);
-                var andTokens = x.GetTokens(9); // and
-                var orTokens = x.GetTokens(235); // or
-                Debug.WriteLine(x.GetText());
-                foreach (var a in andTokens)
-                {
-                    Debug.WriteLine(a.GetText());
-                }
-                foreach (var a in orTokens)
-                {
-                    Debug.WriteLine(a.GetText());
-                }
-            }
+            //var expressionCount = context.expression().Count();
+            //for (int i = 0; i < expressionCount; i++)
+            //{
+            //    var x = context.expression(i);
+            //    var andTokens = x.GetTokens(9); // and
+            //    var orTokens = x.GetTokens(235); // or
+            //    Debug.WriteLine(x.GetText());
+            //    foreach (var a in andTokens)
+            //    {
+            //        Debug.WriteLine(a.GetText());
+            //    }
+            //    foreach (var a in orTokens)
+            //    {
+            //        Debug.WriteLine(a.GetText());
+            //    }
+            //}
 
             Debug.WriteLine("----EnterPredicate Parent.Parent----");
 
@@ -395,10 +394,10 @@ namespace QueryParser
             base.EnterSearch_condition_and(context);
             Debug.WriteLine("EnterSearch_condition_and");
             Debug.WriteLine(context.GetText());
-            var andClause = context.AND().ToList();
-            Debug.WriteLine("EnterSearch_condition_and TEXT");
-            andClause.ForEach(c => Debug.WriteLine($"{c.GetText()}"));
-            Debug.WriteLine("EnterSearch_condition_and TEXT");
+            //var andClause = context.AND().ToList();
+            //Debug.WriteLine("EnterSearch_condition_and TEXT");
+            //andClause.ForEach(c => Debug.WriteLine($"{c.GetText()}"));
+            //Debug.WriteLine("EnterSearch_condition_and TEXT");
         }
 
         public override void EnterSearch_condition_not([NotNull] TSqlParser.Search_condition_notContext context)
